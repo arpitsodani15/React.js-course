@@ -3,8 +3,8 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
-    function RenderComments(comments){
-      const list= comments.comments.map((comment) => {
+    function RenderComments({comments, addComment, dishId}){
+      const list= comments.map((comment) => {
         return(
           <ul className="list-unstyled" key={comment.id}>
               <li>{comment.comment}</li>
@@ -16,7 +16,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
         <div>
           <h4>Comments</h4>
           { list }
-          <CommentForm />
+          <CommentForm dishId={dishId} addComment={addComment} />
         </div>
       );
     }
@@ -51,7 +51,9 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
               <RenderDish dish={props.dish} />
             </div>
             <div className="col-12 col-md-5 m-1">
-              <RenderComments comments={props.comments} />
+              <RenderComments comments={props.comments}
+                addComment={props.addComment}
+                dishId={props.dish.id} />
             </div>
           </div>
         </div>
@@ -79,9 +81,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
       }
 
       handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
-        // event.preventDefault();
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
       }
 
       render () {
@@ -95,8 +96,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                 <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                     <Row className="form-group">
                         <Col>
-                          <Label htmlFor="contacType">Rating</Label>
-                          <Control.select model=".contactType" name="contactType" id="contacType"
+                          <Label htmlFor="rating">Rating</Label>
+                          <Control.select model=".rating" name="rating" id="rating"
                               className="form-control">
                               <option>1</option>
                               <option>2</option>
@@ -108,8 +109,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                     </Row>
                     <Row className="form-group">
                         <Col>
-                          <Label htmlFor="name">Your Name</Label>
-                          <Control.text model=".name" id="name" name="name"
+                          <Label htmlFor="author">Your Name</Label>
+                          <Control.text model=".author" id="author" name="author"
                               placeholder="Name"
                               className="form-control"
                               validators={{
@@ -118,7 +119,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                                 />
                           <Errors
                               className="text-danger"
-                              model=".name"
+                              model=".author"
                               show="touched"
                               messages={{
                                   required: 'Required',
@@ -129,8 +130,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                     </Row>
                     <Row className="form-group">
                         <Col>
-                          <Label htmlFor="message">Comment</Label>
-                          <Control.textarea model=".message" id="message" name="message"
+                          <Label htmlFor="comment">Comment</Label>
+                          <Control.textarea model=".comment" id="comment" name="message"
                             rows="6"
                             className="form-control" />
                         </Col>

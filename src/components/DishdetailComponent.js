@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderComments({comments, addComment, dishId}){
   const list= comments.map((comment) => {
@@ -25,7 +26,7 @@ function RenderComments({comments, addComment, dishId}){
 function RenderDish(dish) {
     return(
       <Card>
-        <CardImg top width="100%" src={dish.dish.image} alt={dish.dish.name} />
+        <CardImg top width="100%" src={baseUrl + dish.dish.image} alt={dish.dish.name} />
         <CardBody>
           <CardTitle>{dish.dish.name}</CardTitle>
           <CardText>{dish.dish.description}</CardText>

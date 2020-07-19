@@ -17,7 +17,7 @@ function RenderMenuItem ({dish}) {
     );
 };
 
-const Menu = (props)=> props.dishes.map((dish) => {
+const Menu = (props)=>{
 
     const menu = props.dishes.map((dish) => {
         return (
@@ -30,7 +30,7 @@ const Menu = (props)=> props.dishes.map((dish) => {
     if (props.isLoading) {
         return(
             <div className="container">
-                <div className="row">            
+                <div className="row">
                     <Loading />
                 </div>
             </div>
@@ -41,7 +41,7 @@ const Menu = (props)=> props.dishes.map((dish) => {
             <div className="container">
                 <div className="row"> 
                     <div className="col-12">
-                        <h4>{props.dishes.errMess}</h4>
+                        <h4>{props.errMess}</h4>
                     </div>
                 </div>
             </div>
@@ -66,6 +66,6 @@ const Menu = (props)=> props.dishes.map((dish) => {
         </div>
         );
     }
-});
+};
 
 export default Menu;
